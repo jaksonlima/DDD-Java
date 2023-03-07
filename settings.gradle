@@ -1,0 +1,5 @@
+rootProject.name = 'DDD-Java'
+include 'domain'
+include 'application'
+include 'infrastructure'
+
