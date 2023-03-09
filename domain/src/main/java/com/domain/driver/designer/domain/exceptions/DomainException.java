@@ -18,7 +18,7 @@ public class DomainException extends NoStackTraceException {
     }
 
     public static DomainException with(final Errors anErros) {
-        return with(List.of(anErros));
+        return new DomainException(anErros.message(), List.of(anErros));
     }
 
     public List<Errors> getErrors() {

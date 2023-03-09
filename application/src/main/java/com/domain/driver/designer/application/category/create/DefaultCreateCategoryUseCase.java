@@ -2,7 +2,9 @@ package com.domain.driver.designer.application.category.create;
 
 import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryGateway;
-import com.domain.driver.designer.domain.validation.handler.ThrowsValidationHandler;
+import com.domain.driver.designer.domain.validation.handler.Notification;
+import io.vavr.API;
+import io.vavr.control.Either;
 
 import java.util.Objects;
 
@@ -15,16 +17,24 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
     }
 
     @Override
-    public CreateCategoryOutput execute(final CreateCategoryCommand aCommand) {
+    public Either<Notification, CreateCategoryOutput> execute(final CreateCategoryCommand aCommand) {
         final var aCategory = Category.newCategory(
                 aCommand.aName(),
                 aCommand.aDescription(),
                 aCommand.isActive()
         );
 
-        aCategory.validate(new ThrowsValidationHandler());
+        final var notification = Notification.create();
 
-        return CreateCategoryOutput.from(categoryCategory.create(aCategory));
+        aCategory.validate(notification);
+
+        return notification.hasError() ? API.Left(notification) : create(aCategory);
+    }
+
+    private Either<Notification, CreateCategoryOutput> create(final Category aCategory) {
+        return API.Try(() -> categoryCategory.create(aCategory))
+                .toEither()
+                .bimap(Notification::create, CreateCategoryOutput::from);
     }
 
 }
