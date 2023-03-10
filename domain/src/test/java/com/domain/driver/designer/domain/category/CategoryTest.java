@@ -36,7 +36,7 @@ class CategoryTest {
         // given
         final String expectedName = null;
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'name'' should not be null";
+        final var expectedErrorMessage = "'name' should not be null";
         final var expectedDescription = "A categoria mas assistida";
         final var expectedisActive = true;
 
@@ -60,7 +60,7 @@ class CategoryTest {
         // given
         final String expectedName = "  ";
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'name'' should not be empty";
+        final var expectedErrorMessage = "'name' should not be empty";
         final var expectedDescription = "A categoria mas assistida";
         final var expectedisActive = true;
 
@@ -84,7 +84,7 @@ class CategoryTest {
         // given
         final String expectedName = "fi ";
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'name'' must be between 3 and 255 characters";
+        final var expectedErrorMessage = "'name' must be between 3 and 255 characters";
         final var expectedDescription = "A categoria mas assistida";
         final var expectedisActive = true;
 
@@ -110,7 +110,7 @@ class CategoryTest {
                 Todavia, o fenômeno da Internet nos obriga à análise do retorno esperado a longo prazo. Nunca é demais lembrar o peso e o significado destes problemas, uma vez que a mobilidade dos capitais internacionais não pode mais se dissociar das diretrizes de desenvolvimento.
                 """;
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'name'' must be between 3 and 255 characters";
+        final var expectedErrorMessage = "'name' must be between 3 and 255 characters";
         final var expectedDescription = "A categoria mas assistida";
         final var expectedisActive = true;
 

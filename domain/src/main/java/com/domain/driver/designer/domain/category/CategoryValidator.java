@@ -26,18 +26,18 @@ public class CategoryValidator extends Validator {
         final var name = this.category.getName();
 
         if (name == null) {
-            this.validationHandler().append(new Errors("'name'' should not be null"));
+            this.validationHandler().append(new Errors("'name' should not be null"));
             return;
         }
 
         if (name.isBlank()) {
-            this.validationHandler().append(new Errors("'name'' should not be empty"));
+            this.validationHandler().append(new Errors("'name' should not be empty"));
             return;
         }
 
         final int length = name.trim().length();
         if (length > NAME_MAX_LENGTH || length < NAME_MIN_LENGTH) {
-            this.validationHandler().append(new Errors("'name'' must be between 3 and 255 characters"));
+            this.validationHandler().append(new Errors("'name' must be between 3 and 255 characters"));
         }
     }
 

@@ -1,6 +1,7 @@
 package com.domain.driver.designer.domain.validation;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ValidationHandler {
 
@@ -13,7 +14,11 @@ public interface ValidationHandler {
     List<Errors> getErrors();
 
     default boolean hasError() {
-        return getErrors() != null && getErrors().isEmpty();
+        return getErrors() != null && !getErrors().isEmpty();
+    }
+
+    default Optional<Errors> firstError() {
+        return hasError() ? Optional.of(getErrors().get(0)) : Optional.empty();
     }
 
     interface Validation {
