@@ -5,6 +5,7 @@ import com.domain.driver.designer.domain.category.CategoryGateway;
 import com.domain.driver.designer.domain.category.CategoryID;
 import com.domain.driver.designer.domain.category.CategorySearchQuery;
 import com.domain.driver.designer.domain.pagination.Pagination;
+import com.domain.driver.designer.infrastructure.category.persistence.CategoryJpaEntity;
 import com.domain.driver.designer.infrastructure.category.persistence.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,12 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Category create(Category aCategory) {
-        return null;
+    public Category create(final Category aCategory) {
+        return save(aCategory);
     }
 
     @Override
     public void deleteById(CategoryID anId) {
-
     }
 
     @Override
@@ -36,8 +36,8 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Category update(Category aCategory) {
-        return null;
+    public Category update(final Category aCategory) {
+        return save(aCategory);
     }
 
     @Override
@@ -45,4 +45,8 @@ public class CategoryMySQLGateway implements CategoryGateway {
         return null;
     }
 
+    private Category save(final Category aCategory) {
+        return this.repository.save(CategoryJpaEntity.from(aCategory))
+                .toAggregate();
+    }
 }
