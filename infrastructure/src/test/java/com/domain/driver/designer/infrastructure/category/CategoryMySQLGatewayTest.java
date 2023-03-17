@@ -3,7 +3,7 @@ package com.domain.driver.designer.infrastructure.category;
 import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryID;
 import com.domain.driver.designer.domain.category.CategorySearchQuery;
-import com.domain.driver.designer.infrastructure.MySQLGatewayTest;
+import com.domain.driver.designer.MySQLGatewayTest;
 import com.domain.driver.designer.infrastructure.category.persistence.CategoryJpaEntity;
 import com.domain.driver.designer.infrastructure.category.persistence.CategoryRepository;
 import org.junit.jupiter.api.Assertions;

@@ -2,7 +2,7 @@ package com.domain.driver.designer.infrastructure.category.persistence;
 
 
 import com.domain.driver.designer.domain.category.Category;
-import com.domain.driver.designer.infrastructure.MySQLGatewayTest;
+import com.domain.driver.designer.MySQLGatewayTest;
 import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
