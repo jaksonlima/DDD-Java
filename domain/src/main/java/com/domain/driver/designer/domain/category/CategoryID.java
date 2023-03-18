@@ -24,9 +24,10 @@ public class CategoryID extends Identifier {
     }
 
     public static CategoryID from(final UUID andId) {
-        return new CategoryID(andId.randomUUID().toString().toLowerCase());
+        return new CategoryID(UUID.randomUUID().toString().toLowerCase());
     }
 
+    @Override
     public String getValue() {
         return value;
     }

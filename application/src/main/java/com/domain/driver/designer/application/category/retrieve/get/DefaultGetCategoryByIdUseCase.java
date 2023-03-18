@@ -1,14 +1,14 @@
 package com.domain.driver.designer.application.category.retrieve.get;
 
+import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryGateway;
 import com.domain.driver.designer.domain.category.CategoryID;
-import com.domain.driver.designer.domain.exceptions.DomainException;
-import com.domain.driver.designer.domain.validation.Errors;
+import com.domain.driver.designer.domain.exceptions.NotFoundException;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class DefaultGetCategoryByIdUseCase extends GetCategoryByIdUseCase {
+public  class DefaultGetCategoryByIdUseCase extends GetCategoryByIdUseCase {
 
     private final CategoryGateway categoryGateway;
 
@@ -25,8 +25,8 @@ public class DefaultGetCategoryByIdUseCase extends GetCategoryByIdUseCase {
                 .orElseThrow(notFound((id)));
     }
 
-    private static Supplier<DomainException> notFound(final CategoryID id) {
-        return () -> DomainException.with(new Errors("Category with ID %s was not found".formatted(id.getValue())));
+    private static Supplier<NotFoundException> notFound(final CategoryID anId) {
+        return () -> NotFoundException.with(Category.class, anId);
     }
 
 }

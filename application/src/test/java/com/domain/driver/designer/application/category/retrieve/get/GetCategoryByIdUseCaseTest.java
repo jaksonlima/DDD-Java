@@ -1,10 +1,10 @@
 package com.domain.driver.designer.application.category.retrieve.get;
 
-import com.domain.driver.designer.application.category.retrieve.get.DefaultGetCategoryByIdUseCase;
 import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryGateway;
 import com.domain.driver.designer.domain.category.CategoryID;
 import com.domain.driver.designer.domain.exceptions.DomainException;
+import com.domain.driver.designer.domain.exceptions.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class GetCategoryUseCaseTest {
+public class GetCategoryByIdUseCaseTest {
 
     @InjectMocks
     private DefaultGetCategoryByIdUseCase useCase;
@@ -66,7 +66,7 @@ public class GetCategoryUseCaseTest {
         Mockito.when(categoryGateway.findById(Mockito.eq(expectedId)))
                 .thenReturn(Optional.empty());
 
-        final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(expectedId.getValue()));
+        final var actualException = Assertions.assertThrows(NotFoundException.class, () -> useCase.execute(expectedId.getValue()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
     }

@@ -8,6 +8,7 @@ import com.domain.driver.designer.application.category.retrieve.get.GetCategoryB
 import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryID;
 import com.domain.driver.designer.domain.exceptions.DomainException;
+import com.domain.driver.designer.domain.exceptions.NotFoundException;
 import com.domain.driver.designer.domain.validation.Errors;
 import com.domain.driver.designer.domain.validation.handler.Notification;
 import com.domain.driver.designer.infrastructure.category.models.CreateCategoryApiInput;
@@ -192,21 +193,20 @@ public class CategoryAPITest {
     @Test
     public void givenAInvalidId_whenCallsGetCategory_shouldReturnNotFound() throws Exception {
         //given
-        final var expectedId = CategoryID.from("123").getValue();
+        final var expectedId = CategoryID.from("123");
         final var expectedErrorMessage = "Category with ID 123 was not found";
 
         //when
-
         when(getCategoryByIdUseCase.execute(any()))
-                .thenThrow(DomainException.with(new Errors(expectedErrorMessage)));
+                .thenThrow(NotFoundException.with(Category.class, expectedId));
 
-        final var request = get("/categories/{id}", expectedId);
+        final var request = get("/categories/{id}", expectedId.getValue());
 
         final var response = this.mvc.perform(request)
                 .andDo(print());
 
         //then
-        response.andExpect(status().isUnprocessableEntity())
+        response.andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
     }
 
