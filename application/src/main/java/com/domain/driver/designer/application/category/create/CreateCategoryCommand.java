@@ -1,8 +1,8 @@
 package com.domain.driver.designer.application.category.create;
 
 public record CreateCategoryCommand(
-        String aName,
-        String aDescription,
+        String name,
+        String description,
         boolean isActive
 ) {
 
