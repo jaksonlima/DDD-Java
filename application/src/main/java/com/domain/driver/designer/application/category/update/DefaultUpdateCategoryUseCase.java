@@ -3,8 +3,7 @@ package com.domain.driver.designer.application.category.update;
 import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryGateway;
 import com.domain.driver.designer.domain.category.CategoryID;
-import com.domain.driver.designer.domain.exceptions.DomainException;
-import com.domain.driver.designer.domain.validation.Errors;
+import com.domain.driver.designer.domain.exceptions.NotFoundException;
 import com.domain.driver.designer.domain.validation.handler.Notification;
 import io.vavr.API;
 import io.vavr.control.Either;
@@ -43,8 +42,8 @@ public class DefaultUpdateCategoryUseCase extends UpdateCategoryUseCase {
                 .bimap(Notification::create, UpdateCategoryOutput::from);
     }
 
-    private static Supplier<DomainException> notFound(final CategoryID id) {
-        return () -> DomainException.with(new Errors("Category with ID %s was not found".formatted(id.getValue())));
+    private static Supplier<NotFoundException> notFound(final CategoryID id) {
+        return () -> NotFoundException.with(Category.class, id);
     }
 
 }

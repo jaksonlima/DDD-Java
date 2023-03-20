@@ -3,8 +3,11 @@ package com.domain.driver.designer.infrastructure.api;
 import com.domain.driver.designer.ControllerTest;
 import com.domain.driver.designer.application.category.create.CreateCategoryOutput;
 import com.domain.driver.designer.application.category.create.CreateCategoryUseCase;
+import com.domain.driver.designer.application.category.delete.DeleteCategoryUseCase;
 import com.domain.driver.designer.application.category.retrieve.get.CategoryOutput;
 import com.domain.driver.designer.application.category.retrieve.get.GetCategoryByIdUseCase;
+import com.domain.driver.designer.application.category.update.UpdateCategoryOutput;
+import com.domain.driver.designer.application.category.update.UpdateCategoryUseCase;
 import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryID;
 import com.domain.driver.designer.domain.exceptions.DomainException;
@@ -12,7 +15,9 @@ import com.domain.driver.designer.domain.exceptions.NotFoundException;
 import com.domain.driver.designer.domain.validation.Errors;
 import com.domain.driver.designer.domain.validation.handler.Notification;
 import com.domain.driver.designer.infrastructure.category.models.CreateCategoryApiInput;
+import com.domain.driver.designer.infrastructure.category.models.UpdateCategoryApiInput;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.vavr.API;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +32,7 @@ import static io.vavr.API.Right;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -46,6 +50,12 @@ public class CategoryAPITest {
 
     @MockBean
     private GetCategoryByIdUseCase getCategoryByIdUseCase;
+
+    @MockBean
+    private UpdateCategoryUseCase updateCategoryUseCase;
+
+    @MockBean
+    private DeleteCategoryUseCase deleteCategoryUseCase;
 
     @Test
     public void givenAValidCommand_whenCallsCreateCategory_shouldReturnCategoryId() throws Exception {
@@ -208,6 +218,150 @@ public class CategoryAPITest {
         //then
         response.andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
+    }
+
+    @Test
+    public void givenAValidCommand_whenCallsUpdateCategory_shouldReturnCategoryId() throws Exception {
+        //given
+        final var expectedId = "123";
+        final var expectedName = "Filmes";
+        final var expectedDescription = "A categoria mais assistida";
+        final var expectedIsActive = true;
+
+        Mockito.when(updateCategoryUseCase.execute(Mockito.any()))
+                .thenReturn(API.Right(UpdateCategoryOutput.from(expectedId)));
+
+        final var aCommand = new UpdateCategoryApiInput(
+                expectedName,
+                expectedDescription,
+                expectedIsActive
+        );
+
+        // when
+        final var request = put("/categories/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(aCommand));
+
+        final var response = mvc.perform(request)
+                .andDo(print());
+
+        // then
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", equalTo(expectedId)));
+
+        verify(updateCategoryUseCase, times(1))
+                .execute(argThat(cmd ->
+                        Objects.equals(expectedName, cmd.name())
+                                && Objects.equals(expectedDescription, cmd.description())
+                                && Objects.equals(expectedIsActive, cmd.isActive())
+                ));
+    }
+
+    @Test
+    public void givenACommandWithInvalidID_whenCallsUpdateCategory_shouldReturnNotFoundException() throws Exception {
+        //given
+        final var expectedId = "123";
+        final var expectedName = "Filmes";
+        final var expectedDescription = "A categoria mais assistida";
+        final var expectedIsActive = true;
+
+        final var expectedErrorMessage = "Category with ID 123 was not found";
+
+        Mockito.when(updateCategoryUseCase.execute(any()))
+                .thenThrow(NotFoundException.with(Category.class, CategoryID.from(expectedId)));
+
+        final var aCommand = new UpdateCategoryApiInput(
+                expectedName,
+                expectedDescription,
+                expectedIsActive
+        );
+
+        // when
+        final var request = put("/categories/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(aCommand));
+
+        final var response = mvc.perform(request)
+                .andDo(print());
+
+        // then
+        response.andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message", equalTo(expectedErrorMessage)));
+
+        verify(updateCategoryUseCase, times(1))
+                .execute(argThat(cmd ->
+                        Objects.equals(expectedName, cmd.name())
+                                && Objects.equals(expectedDescription, cmd.description())
+                                && Objects.equals(expectedIsActive, cmd.isActive())
+                ));
+    }
+
+    @Test
+    public void givenAInvalidName_whenCallsUpdateCategory_thenShouldReturnDomainException() throws Exception {
+        //given
+        final var expectedId = "123";
+        final var expectedName = "Filmes";
+        final var expectedDescription = "A categoria mais assistida";
+        final var expectedIsActive = true;
+
+        final var expectedErrorMessage = "'name' should not be null";
+        final var expectedErrorCount = 1;
+
+        Mockito.when(updateCategoryUseCase.execute(any()))
+                .thenReturn(Left(Notification.create(new Errors(expectedErrorMessage))));
+
+        final var aCommand = new UpdateCategoryApiInput(
+                expectedName,
+                expectedDescription,
+                expectedIsActive
+        );
+
+        // when
+        final var request = put("/categories/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(aCommand));
+
+        final var response = mvc.perform(request)
+                .andDo(print());
+
+        // then
+        response.andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.errors", hasSize(expectedErrorCount)))
+                .andExpect(jsonPath("$.errors[0].message", equalTo(expectedErrorMessage)))
+        ;
+
+        verify(updateCategoryUseCase, times(1))
+                .execute(argThat(cmd ->
+                        Objects.equals(expectedName, cmd.name())
+                                && Objects.equals(expectedDescription, cmd.description())
+                                && Objects.equals(expectedIsActive, cmd.isActive())
+                ));
+    }
+
+    @Test
+    public void givenAInvalidId_whenCallsDeleteCategory_shouldBeReturnNotContent() throws Exception {
+        //given
+        final var expectedId = "123";
+
+        Mockito.doNothing()
+                .when(deleteCategoryUseCase)
+                .execute(any());
+
+        // when
+        final var request = delete("/categories/{id}", expectedId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        final var response = mvc.perform(request)
+                .andDo(print());
+
+        // then
+        response.andExpect(status().isNoContent());
+
+        verify(deleteCategoryUseCase, times(1)).execute(eq(expectedId));
     }
 
 }
