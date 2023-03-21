@@ -1,9 +1,10 @@
 package com.domain.driver.designer.infrastructure.api;
 
 import com.domain.driver.designer.domain.pagination.Pagination;
-import com.domain.driver.designer.infrastructure.category.models.CategoryApiOutput;
-import com.domain.driver.designer.infrastructure.category.models.CreateCategoryApiInput;
-import com.domain.driver.designer.infrastructure.category.models.UpdateCategoryApiInput;
+import com.domain.driver.designer.infrastructure.category.models.CategoryListResponse;
+import com.domain.driver.designer.infrastructure.category.models.CategoryResponse;
+import com.domain.driver.designer.infrastructure.category.models.CreateCategoryRequest;
+import com.domain.driver.designer.infrastructure.category.models.UpdateCategoryRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -26,7 +27,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "422", description = "A Validation error was thrown"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
-    ResponseEntity<?> createCategory(@RequestBody CreateCategoryApiInput input);
+    ResponseEntity<?> createCategory(@RequestBody CreateCategoryRequest input);
 
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -37,7 +38,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "422", description = "A invalid parameter was received"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
-    Pagination<?> listCategory(
+    ResponseEntity<Pagination<CategoryListResponse>> listCategory(
             @RequestParam(name = "search", required = false, defaultValue = "") String search,
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
             @RequestParam(name = "perPage", required = false, defaultValue = "10") int perPage,
@@ -57,7 +58,7 @@ public interface CategoryAPI {
                     @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
             }
     )
-    ResponseEntity<CategoryApiOutput> getById(@PathVariable(value = "id") String id);
+    ResponseEntity<CategoryResponse> getById(@PathVariable(value = "id") String id);
 
     @PutMapping(
             value = "{id}",
@@ -71,7 +72,7 @@ public interface CategoryAPI {
                     @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
             }
     )
-    ResponseEntity<?> updateById(@PathVariable(value = "id") String id, @RequestBody UpdateCategoryApiInput input);
+    ResponseEntity<?> updateById(@PathVariable(value = "id") String id, @RequestBody UpdateCategoryRequest input);
 
     @DeleteMapping(
             value = "{id}",

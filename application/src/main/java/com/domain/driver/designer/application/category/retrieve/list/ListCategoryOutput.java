@@ -11,6 +11,7 @@ public record ListCategoryOutput(
         String description,
         boolean isActive,
         Instant createdAt,
+        Instant updatedAt,
         Instant deletedAt
 ) {
 
@@ -22,6 +23,7 @@ public record ListCategoryOutput(
                 aCategory.getDescription(),
                 aCategory.isActive(),
                 aCategory.getCreatedAt(),
+                aCategory.getUpdatedAt(),
                 aCategory.getDeletedAt()
         );
     }
