@@ -9,10 +9,15 @@ import java.util.Objects;
 public class Category extends AggregateRoot<CategoryID> implements Cloneable {
 
     private String name;
+
     private String description;
+
     private boolean isActive;
+
     private Instant createdAt;
+
     private Instant updatedAt;
+
     private Instant deletedAt;
 
     private Category(final CategoryID anId,
