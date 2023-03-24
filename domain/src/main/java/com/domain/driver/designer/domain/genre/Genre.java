@@ -2,7 +2,10 @@ package com.domain.driver.designer.domain.genre;
 
 import com.domain.driver.designer.domain.AggregateRoot;
 import com.domain.driver.designer.domain.category.CategoryID;
+import com.domain.driver.designer.domain.exceptions.NotificationException;
+import com.domain.driver.designer.domain.utils.InstantUtils;
 import com.domain.driver.designer.domain.validation.ValidationHandler;
+import com.domain.driver.designer.domain.validation.handler.Notification;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -37,8 +40,11 @@ public class Genre extends AggregateRoot<GenreID> {
         this.categories = Objects.requireNonNull(categories);
         this.createdAt = Objects.requireNonNull(createdAt);
         this.updatedAt = Objects.requireNonNull(updatedAt);
-        this.deletedAt = Objects.requireNonNull(deletedAt);
+        this.deletedAt = deletedAt;
+
+        this.selfValidate();
     }
+
 
     public static Genre newGenre(final String aName,
                                  final boolean isActive) {
@@ -73,6 +79,7 @@ public class Genre extends AggregateRoot<GenreID> {
 
     @Override
     protected void validate(final ValidationHandler handler) {
+        new GenreValidator(this, handler).validate();
     }
 
     public String getName() {
@@ -97,6 +104,63 @@ public class Genre extends AggregateRoot<GenreID> {
 
     public Instant getDeletedAt() {
         return deletedAt;
+    }
+
+    public void deactivate() {
+        if (getDeletedAt() == null) {
+            this.deletedAt = InstantUtils.now();
+        }
+        this.active = false;
+        this.updatedAt = InstantUtils.now();
+    }
+
+    public void activate() {
+        this.deletedAt = null;
+        this.active = true;
+        this.updatedAt = InstantUtils.now();
+    }
+
+    public void update(final String aName, final boolean isActive, final List<CategoryID> categories) {
+        this.name = aName;
+        this.categories = new ArrayList<>(categories);
+        this.updatedAt = InstantUtils.now();
+
+        if (isActive) {
+            activate();
+        } else {
+            deactivate();
+        }
+
+        this.selfValidate();
+    }
+
+    public void addCategory(final CategoryID aCategory) {
+        final var newCategories = new ArrayList<>(getCategories());
+        newCategories.add(aCategory);
+
+        this.categories = newCategories;
+        this.updatedAt = InstantUtils.now();
+    }
+
+    public void removeCategory(final CategoryID aCategoryId) {
+        final var newCategories = new ArrayList<>(getCategories());
+        newCategories.remove(aCategoryId);
+
+        this.categories = newCategories;
+        this.updatedAt = InstantUtils.now();
+    }
+
+    public void addCategories(final List<CategoryID> aCategories) {
+        aCategories.forEach(this::addCategory);
+    }
+
+    private void selfValidate() {
+        final var aNotification = Notification.create();
+        validate(aNotification);
+
+        if (aNotification.hasError()) {
+            throw new NotificationException("Failed to create Aggregate Genre", aNotification);
+        }
     }
 
 }

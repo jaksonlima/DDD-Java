@@ -1,6 +1,7 @@
 package com.domain.driver.designer.domain.genre;
 
 import com.domain.driver.designer.domain.category.CategoryID;
+import com.domain.driver.designer.domain.exceptions.NotificationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
