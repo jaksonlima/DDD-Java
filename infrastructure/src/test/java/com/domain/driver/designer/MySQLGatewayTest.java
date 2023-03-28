@@ -1,5 +1,6 @@
 package com.domain.driver.designer;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,11 +13,15 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @ActiveProfiles("test-integration")
-@ComponentScan(useDefaultFilters = false,
+@ComponentScan(
+        basePackages = "com.domain.driver.designer",
+        useDefaultFilters = false,
         includeFilters = {
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*MySQLGateway")
-        })
+        }
+)
 @DataJpaTest
 @ExtendWith(MySQLCleanUpExtension.class)
+@Tag("integrationTest")
 public @interface MySQLGatewayTest {
 }

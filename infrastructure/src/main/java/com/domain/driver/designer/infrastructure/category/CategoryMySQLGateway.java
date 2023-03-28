@@ -3,8 +3,8 @@ package com.domain.driver.designer.infrastructure.category;
 import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryGateway;
 import com.domain.driver.designer.domain.category.CategoryID;
-import com.domain.driver.designer.domain.category.CategorySearchQuery;
 import com.domain.driver.designer.domain.pagination.Pagination;
+import com.domain.driver.designer.domain.pagination.SearchQuery;
 import com.domain.driver.designer.infrastructure.category.persistence.CategoryJpaEntity;
 import com.domain.driver.designer.infrastructure.category.persistence.CategoryRepository;
 import com.domain.driver.designer.infrastructure.utils.SpecificationUtils;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Pagination<Category> findAll(final CategorySearchQuery aQuery) {
+    public Pagination<Category> findAll(final SearchQuery aQuery) {
         final var page = PageRequest.of(
                 aQuery.page(),
                 aQuery.perPage(),
@@ -77,8 +78,15 @@ public class CategoryMySQLGateway implements CategoryGateway {
         );
     }
 
+    @Override
+    public List<CategoryID> existsByIds(final List<CategoryID> ids) {
+        // TODO: implmentação com Genre
+        return List.of();
+    }
+
     private Category save(final Category aCategory) {
         return this.repository.save(CategoryJpaEntity.from(aCategory))
                 .toAggregate();
     }
+
 }

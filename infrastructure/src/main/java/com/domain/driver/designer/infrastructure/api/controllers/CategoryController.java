@@ -9,7 +9,7 @@ import com.domain.driver.designer.application.category.retrieve.list.ListCategor
 import com.domain.driver.designer.application.category.update.UpdateCategoryCommand;
 import com.domain.driver.designer.application.category.update.UpdateCategoryOutput;
 import com.domain.driver.designer.application.category.update.UpdateCategoryUseCase;
-import com.domain.driver.designer.domain.category.CategorySearchQuery;
+import com.domain.driver.designer.domain.pagination.SearchQuery;
 import com.domain.driver.designer.domain.pagination.Pagination;
 import com.domain.driver.designer.domain.validation.handler.Notification;
 import com.domain.driver.designer.infrastructure.api.CategoryAPI;
@@ -74,7 +74,7 @@ public class CategoryController implements CategoryAPI {
                                                                          final int perPage,
                                                                          final String sort,
                                                                          final String direction) {
-        final var aCategorySearchQuery = new CategorySearchQuery(
+        final var aCategorySearchQuery = new SearchQuery(
                 page,
                 perPage,
                 search,

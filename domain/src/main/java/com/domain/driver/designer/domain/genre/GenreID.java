@@ -24,7 +24,7 @@ public class GenreID extends Identifier {
     }
 
     public static GenreID from(final UUID andId) {
-        return new GenreID(UUID.randomUUID().toString().toLowerCase());
+        return new GenreID(andId.toString().toLowerCase());
     }
 
     @Override

@@ -12,7 +12,7 @@ public class CategoryID extends Identifier {
     private CategoryID(final String value) {
         Objects.requireNonNull(value, "value cannot be null");
 
-        this.value = value;
+        this.value = value.toLowerCase();
     }
 
     public static CategoryID unique() {
@@ -24,7 +24,7 @@ public class CategoryID extends Identifier {
     }
 
     public static CategoryID from(final UUID andId) {
-        return new CategoryID(UUID.randomUUID().toString().toLowerCase());
+        return new CategoryID(andId.toString());
     }
 
     @Override

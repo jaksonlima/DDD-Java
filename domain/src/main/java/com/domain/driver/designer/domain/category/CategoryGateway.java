@@ -1,7 +1,9 @@
 package com.domain.driver.designer.domain.category;
 
 import com.domain.driver.designer.domain.pagination.Pagination;
+import com.domain.driver.designer.domain.pagination.SearchQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CategoryGateway {
@@ -14,6 +16,8 @@ public interface CategoryGateway {
 
     Category update(Category aCategory);
 
-    Pagination<Category> findAll(CategorySearchQuery aQuery);
+    Pagination<Category> findAll(SearchQuery aQuery);
+
+    List<CategoryID> existsByIds(List<CategoryID> ids);
 
 }

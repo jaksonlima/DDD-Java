@@ -3,13 +3,13 @@ package com.domain.driver.designer.domain.validation;
 import java.util.List;
 import java.util.Optional;
 
-public interface ValidationHandler {
+public interface  ValidationHandler {
 
     ValidationHandler append(Errors anErrors);
 
     ValidationHandler append(ValidationHandler anHandler);
 
-    ValidationHandler validate(Validation anValidation);
+    <T> T validate(Validation<T> anValidation);
 
     List<Errors> getErrors();
 
@@ -21,8 +21,8 @@ public interface ValidationHandler {
         return hasError() ? Optional.of(getErrors().get(0)) : Optional.empty();
     }
 
-    interface Validation {
-        void validate();
+    interface Validation<T> {
+        T validate();
     }
 
 }

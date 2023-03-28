@@ -1,6 +1,6 @@
-package com.domain.driver.designer.domain.category;
+package com.domain.driver.designer.domain.pagination;
 
-public record CategorySearchQuery(
+public record SearchQuery(
         int page,
         int perPage,
         String terms,

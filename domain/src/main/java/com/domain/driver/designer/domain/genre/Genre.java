@@ -35,7 +35,7 @@ public class Genre extends AggregateRoot<GenreID> {
                   final Instant updatedAt,
                   final Instant deletedAt) {
         super(genreID);
-        this.name = Objects.requireNonNull(name);
+        this.name = name;
         this.active = active;
         this.categories = Objects.requireNonNull(categories);
         this.createdAt = Objects.requireNonNull(createdAt);
@@ -120,9 +120,9 @@ public class Genre extends AggregateRoot<GenreID> {
         this.updatedAt = InstantUtils.now();
     }
 
-    public void update(final String aName, final boolean isActive, final List<CategoryID> categories) {
+    public Genre update(final String aName, final boolean isActive, final List<CategoryID> categories) {
         this.name = aName;
-        this.categories = new ArrayList<>(categories);
+        this.categories = new ArrayList<>(categories != null ? categories : Collections.emptyList());
         this.updatedAt = InstantUtils.now();
 
         if (isActive) {
@@ -132,26 +132,33 @@ public class Genre extends AggregateRoot<GenreID> {
         }
 
         this.selfValidate();
+
+        return this;
     }
 
-    public void addCategory(final CategoryID aCategory) {
-        final var newCategories = new ArrayList<>(getCategories());
-        newCategories.add(aCategory);
+    public void addCategory(final CategoryID aCategoryId) {
+        if (aCategoryId == null) return;
+
+        final var newCategories = new ArrayList<>(getCategories() != null ? getCategories() : Collections.emptyList());
+        newCategories.add(aCategoryId);
 
         this.categories = newCategories;
         this.updatedAt = InstantUtils.now();
     }
 
     public void removeCategory(final CategoryID aCategoryId) {
-        final var newCategories = new ArrayList<>(getCategories());
-        newCategories.remove(aCategoryId);
+        if (aCategoryId == null) return;
 
-        this.categories = newCategories;
+        this.categories.remove(aCategoryId);
         this.updatedAt = InstantUtils.now();
     }
 
-    public void addCategories(final List<CategoryID> aCategories) {
+    public Genre addCategories(final List<CategoryID> aCategories) {
+        if (aCategories == null || aCategories.isEmpty()) return this;
+
         aCategories.forEach(this::addCategory);
+
+        return this;
     }
 
     private void selfValidate() {
