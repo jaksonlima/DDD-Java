@@ -20,10 +20,10 @@ import java.util.Optional;
 @Component
 public class CategoryMySQLGateway implements CategoryGateway {
 
-    private final CategoryRepository repository;
+    private final CategoryRepository categoryRepository;
 
-    public CategoryMySQLGateway(final CategoryRepository repository) {
-        this.repository = Objects.requireNonNull(repository);
+    public CategoryMySQLGateway(final CategoryRepository categoryRepository) {
+        this.categoryRepository = Objects.requireNonNull(categoryRepository);
     }
 
     @Override
@@ -35,14 +35,14 @@ public class CategoryMySQLGateway implements CategoryGateway {
     public void deleteById(final CategoryID anId) {
         final var anIdValue = anId.getValue();
 
-        if (repository.existsById(anIdValue)) {
-            repository.deleteById(anIdValue);
+        if (categoryRepository.existsById(anIdValue)) {
+            categoryRepository.deleteById(anIdValue);
         }
     }
 
     @Override
     public Optional<Category> findById(final CategoryID anId) {
-        return repository.findById(anId.getValue())
+        return categoryRepository.findById(anId.getValue())
                 .map(CategoryJpaEntity::toAggregate);
     }
 
@@ -68,7 +68,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
                     return nameLike.or(descriptionLike);
                 }).orElse(null);
 
-        final var pageResult = this.repository.findAll(Specification.where(specification), page);
+        final var pageResult = this.categoryRepository.findAll(Specification.where(specification), page);
 
         return new Pagination<>(
                 pageResult.getNumber(),
@@ -80,12 +80,13 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     @Override
     public List<CategoryID> existsByIds(final List<CategoryID> ids) {
-        // TODO: implmentação com Genre
-        return List.of();
+        return ids.stream()
+                .filter(it -> this.categoryRepository.existsById(it.getValue()))
+                .toList();
     }
 
     private Category save(final Category aCategory) {
-        return this.repository.save(CategoryJpaEntity.from(aCategory))
+        return this.categoryRepository.save(CategoryJpaEntity.from(aCategory))
                 .toAggregate();
     }
 

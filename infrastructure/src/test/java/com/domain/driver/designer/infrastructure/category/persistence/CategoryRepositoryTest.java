@@ -16,66 +16,62 @@ public class CategoryRepositoryTest {
     private CategoryRepository categoryRepository;
 
     @Test
-    void givenAInvalidName_whenCallsSave_shouldReturnError() {
+    public void givenAnInvalidNullName_whenCallsSave_shouldReturnError() {
         final var expectedPropertyName = "name";
         final var expectedMessage = "not-null property references a null or transient value : com.domain.driver.designer.infrastructure.category.persistence.CategoryJpaEntity.name";
 
-        final var aCategory = Category.newCategory(
-                "Filmes",
-                "Categoria mas assistida",
-                true
-        );
+        final var aCategory = Category.newCategory("Filmes", "A categoria mais assistida", true);
 
         final var anEntity = CategoryJpaEntity.from(aCategory);
         anEntity.setName(null);
 
-        final var actualException = Assertions.assertThrows(DataIntegrityViolationException.class, () -> categoryRepository.save(anEntity));
-        final var actualCausa = Assertions.assertInstanceOf(PropertyValueException.class, actualException.getCause());
+        final var actualException =
+                Assertions.assertThrows(DataIntegrityViolationException.class, () -> categoryRepository.save(anEntity));
 
-        Assertions.assertEquals(expectedPropertyName, actualCausa.getPropertyName());
-        Assertions.assertEquals(expectedMessage, actualCausa.getMessage());
+        final var actualCause =
+                Assertions.assertInstanceOf(PropertyValueException.class, actualException.getCause());
+
+        Assertions.assertEquals(expectedPropertyName, actualCause.getPropertyName());
+        Assertions.assertEquals(expectedMessage, actualCause.getMessage());
     }
 
     @Test
-    void givenAInvalidCreatedAt_whenCallsSave_shouldReturnError() {
+    public void givenAnInvalidNullCreatedAt_whenCallsSave_shouldReturnError() {
         final var expectedPropertyName = "createdAt";
         final var expectedMessage = "not-null property references a null or transient value : com.domain.driver.designer.infrastructure.category.persistence.CategoryJpaEntity.createdAt";
-
-        final var aCategory = Category.newCategory(
-                "Filmes",
-                "Categoria mas assistida",
-                true
-        );
+        final var aCategory = Category.newCategory("Filmes", "A categoria mais assistida", true);
 
         final var anEntity = CategoryJpaEntity.from(aCategory);
         anEntity.setCreatedAt(null);
 
-        final var actualException = Assertions.assertThrows(DataIntegrityViolationException.class, () -> categoryRepository.save(anEntity));
-        final var actualCausa = Assertions.assertInstanceOf(PropertyValueException.class, actualException.getCause());
+        final var actualException =
+                Assertions.assertThrows(DataIntegrityViolationException.class, () -> categoryRepository.save(anEntity));
 
-        Assertions.assertEquals(expectedPropertyName, actualCausa.getPropertyName());
-        Assertions.assertEquals(expectedMessage, actualCausa.getMessage());
+        final var actualCause =
+                Assertions.assertInstanceOf(PropertyValueException.class, actualException.getCause());
+
+        Assertions.assertEquals(expectedPropertyName, actualCause.getPropertyName());
+        Assertions.assertEquals(expectedMessage, actualCause.getMessage());
     }
 
     @Test
-    void givenAInvalidUpdatedAt_whenCallsSave_shouldReturnError() {
+    public void givenAnInvalidNullUpdatedAt_whenCallsSave_shouldReturnError() {
         final var expectedPropertyName = "updatedAt";
-        final var expectedMessage = "not-null property references a null or transient value : com.domain.driver.designer.infrastructure.category.persistence.CategoryJpaEntity.updatedAt";
+        final var expectedMessage = "not-null property references a null or transient value : com.fullcycle.admin.catalogo.infrastructure.category.persistence.CategoryJpaEntity.updatedAt";
 
-        final var aCategory = Category.newCategory(
-                "Filmes",
-                "Categoria mas assistida",
-                true
-        );
+        final var aCategory = Category.newCategory("Filmes", "A categoria mais assistida", true);
 
         final var anEntity = CategoryJpaEntity.from(aCategory);
         anEntity.setUpdatedAt(null);
 
-        final var actualException = Assertions.assertThrows(DataIntegrityViolationException.class, () -> categoryRepository.save(anEntity));
-        final var actualCausa = Assertions.assertInstanceOf(PropertyValueException.class, actualException.getCause());
+        final var actualException =
+                Assertions.assertThrows(DataIntegrityViolationException.class, () -> categoryRepository.save(anEntity));
 
-        Assertions.assertEquals(expectedPropertyName, actualCausa.getPropertyName());
-        Assertions.assertEquals(expectedMessage, actualCausa.getMessage());
+        final var actualCause =
+                Assertions.assertInstanceOf(PropertyValueException.class, actualException.getCause());
+
+        Assertions.assertEquals(expectedPropertyName, actualCause.getPropertyName());
+        Assertions.assertEquals(expectedMessage, actualCause.getMessage());
     }
 
 }
