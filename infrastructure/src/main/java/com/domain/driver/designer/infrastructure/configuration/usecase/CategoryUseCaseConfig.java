@@ -12,11 +12,11 @@ import com.domain.driver.designer.application.category.update.DefaultUpdateCateg
 import com.domain.driver.designer.application.category.update.UpdateCategoryUseCase;
 import com.domain.driver.designer.infrastructure.category.CategoryMySQLGateway;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Objects;
 
-@Component
+@Configuration
 public class CategoryUseCaseConfig {
 
     private final CategoryMySQLGateway categoryGateway;

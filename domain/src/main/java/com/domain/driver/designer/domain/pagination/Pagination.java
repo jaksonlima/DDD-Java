@@ -10,6 +10,20 @@ public record Pagination<T>(
         List<T> items
 ) {
 
+    public static <T> Pagination<T> with(
+            int currentPage,
+            int perPage,
+            long total,
+            List<T> items
+    ) {
+        return new Pagination<T>(
+                currentPage,
+                perPage,
+                total,
+                items
+        );
+    }
+
     public <R> Pagination<R> map(final Function<T, R> mapper) {
         final var newItems = items.stream()
                 .map(mapper)

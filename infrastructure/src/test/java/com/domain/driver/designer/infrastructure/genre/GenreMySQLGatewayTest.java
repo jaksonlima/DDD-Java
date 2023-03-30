@@ -414,7 +414,7 @@ public class GenreMySQLGatewayTest {
         final var expectedTotal = 0;
 
         final var aQuery =
-                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+                SearchQuery.with(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         // when
         final var actualPage = genreGateway.findAll(aQuery);
@@ -448,7 +448,7 @@ public class GenreMySQLGatewayTest {
         final var expectedDirection = "asc";
 
         final var aQuery =
-                new SearchQuery(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
+                SearchQuery.with(expectedPage, expectedPerPage, expectedTerms, expectedSort, expectedDirection);
 
         // when
         final var actualPage = genreGateway.findAll(aQuery);
