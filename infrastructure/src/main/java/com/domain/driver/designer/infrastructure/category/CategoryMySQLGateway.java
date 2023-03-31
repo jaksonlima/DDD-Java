@@ -79,9 +79,14 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public List<CategoryID> existsByIds(final List<CategoryID> ids) {
-        return ids.stream()
-                .filter(it -> this.categoryRepository.existsById(it.getValue()))
+    public List<CategoryID> existsByIds(final List<CategoryID> categoryIds) {
+        final var ids = categoryIds.stream()
+                .map(CategoryID::getValue)
+                .toList();
+
+        return this.categoryRepository.existsByIds(ids)
+                .stream()
+                .map(CategoryID::from)
                 .toList();
     }
 
