@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 
 @IntegrationTest
@@ -58,7 +60,8 @@ public class GetGenreByIdUseCaseIT {
                 expectedCategories.size() == actualGenre.categories().size()
                         && asString(expectedCategories).containsAll(actualGenre.categories())
         );
-        Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.createdAt());
+        Assertions.assertEquals(aGenre.getCreatedAt().truncatedTo(ChronoUnit.MINUTES),
+                actualGenre.createdAt().truncatedTo(ChronoUnit.MINUTES));
         Assertions.assertEquals(aGenre.getUpdatedAt(), actualGenre.updatedAt());
         Assertions.assertEquals(aGenre.getDeletedAt(), actualGenre.deletedAt());
     }

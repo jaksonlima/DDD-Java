@@ -13,7 +13,7 @@ public interface CategoryRepository extends JpaRepository<CategoryJpaEntity, Str
 
     Page<CategoryJpaEntity> findAll(Specification<CategoryJpaEntity> whereClause, Pageable page);
 
-    @Query(value = "select c.id from Category c where c.id in ids")
+    @Query(value = "select c.id from Category c where c.id in :ids")
     List<String> existsByIds(@Param("ids") List<String> ids);
 
 }
