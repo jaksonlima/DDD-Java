@@ -1,13 +1,14 @@
-package com.domain.driver.designer.infrastructure.category.models;
+package com.domain.driver.designer.infrastructure.genre.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
+import java.util.List;
 
-public record CategoryListResponse(
+public record GenreResponse(
         @JsonProperty("id") String id,
         @JsonProperty("name") String name,
-        @JsonProperty("description") String description,
+        @JsonProperty("categories_id") List<String> categories,
         @JsonProperty("is_active") Boolean active,
         @JsonProperty("created_at") Instant createdAt,
         @JsonProperty("updated_at") Instant updatedAt,

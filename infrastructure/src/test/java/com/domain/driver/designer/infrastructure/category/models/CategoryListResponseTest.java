@@ -12,7 +12,7 @@ import java.time.Instant;
 public class CategoryListResponseTest {
 
     @Autowired
-    private JacksonTester<CategoryListResponse> json;
+    private JacksonTester<ListCategoryResponse> json;
 
     @Test
     public void testMarshall() throws Exception {
@@ -24,7 +24,7 @@ public class CategoryListResponseTest {
         final var expectedUpdatedAt = Instant.now();
         final var expectedDeletedAt = Instant.now();
 
-        final var response = new CategoryListResponse(
+        final var response = new ListCategoryResponse(
                 expectedId,
                 expectedName,
                 expectedDescription,

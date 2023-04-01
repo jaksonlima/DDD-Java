@@ -2,7 +2,7 @@ package com.domain.driver.designer.infrastructure.category.presenters;
 
 import com.domain.driver.designer.application.category.retrieve.get.CategoryOutput;
 import com.domain.driver.designer.application.category.retrieve.list.ListCategoryOutput;
-import com.domain.driver.designer.infrastructure.category.models.CategoryListResponse;
+import com.domain.driver.designer.infrastructure.category.models.ListCategoryResponse;
 import com.domain.driver.designer.infrastructure.category.models.CategoryResponse;
 
 public interface CategoryApiPresenter {
@@ -19,8 +19,8 @@ public interface CategoryApiPresenter {
         );
     }
 
-    static CategoryListResponse present(final ListCategoryOutput output) {
-        return new CategoryListResponse(
+    static ListCategoryResponse present(final ListCategoryOutput output) {
+        return new ListCategoryResponse(
                 output.id().getValue(),
                 output.name(),
                 output.description(),

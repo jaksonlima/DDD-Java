@@ -13,7 +13,7 @@ import com.domain.driver.designer.domain.pagination.SearchQuery;
 import com.domain.driver.designer.domain.pagination.Pagination;
 import com.domain.driver.designer.domain.validation.handler.Notification;
 import com.domain.driver.designer.infrastructure.api.CategoryAPI;
-import com.domain.driver.designer.infrastructure.category.models.CategoryListResponse;
+import com.domain.driver.designer.infrastructure.category.models.ListCategoryResponse;
 import com.domain.driver.designer.infrastructure.category.models.CategoryResponse;
 import com.domain.driver.designer.infrastructure.category.models.CreateCategoryRequest;
 import com.domain.driver.designer.infrastructure.category.models.UpdateCategoryRequest;
@@ -69,7 +69,7 @@ public class CategoryController implements CategoryAPI {
     }
 
     @Override
-    public ResponseEntity<Pagination<CategoryListResponse>> listCategory(final String search,
+    public ResponseEntity<Pagination<ListCategoryResponse>> listCategory(final String search,
                                                                          final int page,
                                                                          final int perPage,
                                                                          final String sort,

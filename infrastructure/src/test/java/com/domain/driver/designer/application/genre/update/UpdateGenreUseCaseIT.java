@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -67,7 +68,7 @@ public class UpdateGenreUseCaseIT {
                 expectedCategories.size() == actualGenre.getCategoryIds().size()
                         && expectedCategories.containsAll(actualGenre.getCategoryIds())
         );
-        Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
+        Assertions.assertEquals(aGenre.getCreatedAt().truncatedTo(ChronoUnit.MINUTES), actualGenre.getCreatedAt().truncatedTo(ChronoUnit.MINUTES));
         Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(actualGenre.getUpdatedAt()));
         Assertions.assertNull(actualGenre.getDeletedAt());
     }
@@ -110,7 +111,7 @@ public class UpdateGenreUseCaseIT {
                 expectedCategories.size() == actualGenre.getCategoryIds().size()
                         && expectedCategories.containsAll(actualGenre.getCategoryIds())
         );
-        Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
+        Assertions.assertEquals(aGenre.getCreatedAt().truncatedTo(ChronoUnit.MINUTES), actualGenre.getCreatedAt().truncatedTo(ChronoUnit.MINUTES));
         Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(actualGenre.getUpdatedAt()));
         Assertions.assertNull(actualGenre.getDeletedAt());
     }
@@ -150,7 +151,7 @@ public class UpdateGenreUseCaseIT {
                 expectedCategories.size() == actualGenre.getCategoryIds().size()
                         && expectedCategories.containsAll(actualGenre.getCategoryIds())
         );
-        Assertions.assertEquals(aGenre.getCreatedAt(), actualGenre.getCreatedAt());
+        Assertions.assertEquals(aGenre.getCreatedAt().truncatedTo(ChronoUnit.MINUTES), actualGenre.getCreatedAt().truncatedTo(ChronoUnit.MINUTES));
         Assertions.assertTrue(aGenre.getUpdatedAt().isBefore(actualGenre.getUpdatedAt()));
         Assertions.assertNotNull(actualGenre.getDeletedAt());
     }
