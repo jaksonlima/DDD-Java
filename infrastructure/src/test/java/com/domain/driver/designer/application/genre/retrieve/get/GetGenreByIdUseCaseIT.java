@@ -1,4 +1,4 @@
-package com.domain.driver.designer.application.genre.retrieve;
+package com.domain.driver.designer.application.genre.retrieve.get;
 
 import com.domain.driver.designer.IntegrationTest;
 import com.domain.driver.designer.application.genre.retrieve.get.GetGenreByIdUseCase;
