@@ -36,7 +36,7 @@ public interface GenreAPI {
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
     ResponseEntity<Pagination<ListGenreResponse>> listGenre(
-            @RequestParam(name = "name", required = false, defaultValue = "") String search,
+            @RequestParam(name = "search", required = false, defaultValue = "") String search,
             @RequestParam(name = "page", required = false, defaultValue = "0") int page,
             @RequestParam(name = "perPage", required = false, defaultValue = "10") int perPage,
             @RequestParam(name = "sort", required = false, defaultValue = "name") String sort,
