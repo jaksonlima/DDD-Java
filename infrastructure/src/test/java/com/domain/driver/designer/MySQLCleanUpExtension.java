@@ -1,5 +1,6 @@
 package com.domain.driver.designer;
 
+import com.domain.driver.designer.infrastructure.castmember.persistence.CastMemberRepository;
 import com.domain.driver.designer.infrastructure.category.persistence.CategoryRepository;
 import com.domain.driver.designer.infrastructure.genre.persistence.GenreRepository;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -18,7 +19,8 @@ public class MySQLCleanUpExtension implements BeforeEachCallback {
 
         cleanUp(List.of(
                 appContext.getBean(GenreRepository.class),
-                appContext.getBean(CategoryRepository.class)
+                appContext.getBean(CategoryRepository.class),
+                appContext.getBean(CastMemberRepository.class)
         ));
     }
 
