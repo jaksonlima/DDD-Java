@@ -47,7 +47,6 @@ public class CastMemberAPITest {
     @Autowired
     private ObjectMapper mapper;
 
-
     @MockBean
     private DefaultCreateCastMemberUseCase createCastMemberUseCase;
 
