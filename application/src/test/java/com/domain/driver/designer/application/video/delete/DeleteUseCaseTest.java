@@ -1,4 +1,4 @@
-package com.domain.driver.designer.application.video;
+package com.domain.driver.designer.application.video.delete;
 
 import com.domain.driver.designer.application.UseCaseTest;
 import com.domain.driver.designer.application.video.delete.DefaultDeleteVideoUseCase;

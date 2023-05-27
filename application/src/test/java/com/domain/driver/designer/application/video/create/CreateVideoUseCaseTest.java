@@ -1,4 +1,4 @@
-package com.domain.driver.designer.application.video;
+package com.domain.driver.designer.application.video.create;
 
 import com.domain.driver.designer.application.Fixture;
 import com.domain.driver.designer.application.UseCaseTest;
