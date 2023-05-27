@@ -18,6 +18,6 @@ public interface CategoryGateway {
 
     Pagination<Category> findAll(SearchQuery aQuery);
 
-    List<CategoryID> existsByIds(List<CategoryID> ids);
+    List<CategoryID> existsByIds(Iterable<CategoryID> ids);
 
 }
