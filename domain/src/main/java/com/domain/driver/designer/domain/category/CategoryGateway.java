@@ -3,6 +3,7 @@ package com.domain.driver.designer.domain.category;
 import com.domain.driver.designer.domain.pagination.Pagination;
 import com.domain.driver.designer.domain.pagination.SearchQuery;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,5 @@ public interface CategoryGateway {
 
     Pagination<Category> findAll(SearchQuery aQuery);
 
-    List<CategoryID> existsByIds(Iterable<CategoryID> ids);
-
+    List<CategoryID> existsByIds(Collection<CategoryID> categoryIds);
 }

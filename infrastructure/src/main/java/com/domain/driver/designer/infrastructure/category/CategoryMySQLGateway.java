@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -79,7 +80,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public List<CategoryID> existsByIds(final List<CategoryID> categoryIds) {
+    public List<CategoryID> existsByIds(final Collection<CategoryID> categoryIds) {
         final var ids = categoryIds.stream()
                 .map(CategoryID::getValue)
                 .toList();

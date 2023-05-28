@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -75,7 +76,7 @@ public class GenreMySQLGateway implements GenreGateway {
     }
 
     @Override
-    public List<GenreID> existsByIds(final List<GenreID> ids) {
+    public List<GenreID> existsByIds(final Collection<GenreID> ids) {
         return ids.stream()
                 .filter(it -> this.genreRepository.existsById(it.getValue()))
                 .toList();

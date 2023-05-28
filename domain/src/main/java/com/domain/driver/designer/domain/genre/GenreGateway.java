@@ -3,6 +3,7 @@ package com.domain.driver.designer.domain.genre;
 import com.domain.driver.designer.domain.pagination.Pagination;
 import com.domain.driver.designer.domain.pagination.SearchQuery;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,5 @@ public interface GenreGateway {
 
     Pagination<Genre> findAll(SearchQuery aQuery);
 
-    List<GenreID> existsByIds(final Iterable<GenreID> ids);
-
+    List<GenreID> existsByIds(Collection<GenreID> ids);
 }

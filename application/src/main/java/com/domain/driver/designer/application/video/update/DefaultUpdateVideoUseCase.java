@@ -16,10 +16,7 @@ import com.domain.driver.designer.domain.validation.handler.Notification;
 import com.domain.driver.designer.domain.video.*;
 
 import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -146,7 +143,7 @@ public class DefaultUpdateVideoUseCase extends UpdateVideoUseCase {
     private <T extends Identifier> ValidationHandler validateAggregate(
             final String aggregate,
             final Set<T> ids,
-            final Function<Iterable<T>, List<T>> existsByIds
+            final Function<Collection<T>, Collection<T>> existsByIds
     ) {
         final var notification = Notification.create();
         if (ids == null || ids.isEmpty()) {

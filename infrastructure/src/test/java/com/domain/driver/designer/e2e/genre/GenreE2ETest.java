@@ -187,7 +187,7 @@ public class GenreE2ETest implements MockDsl {
 
         final var filmes = givenACategory("Filmes", null, true);
 
-        final var expectedName = "Ação";
+        final var expectedName = "Acao";
         final var expectedIsActive = true;
         final var expectedCategories = List.of(filmes);
 

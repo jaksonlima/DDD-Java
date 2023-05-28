@@ -15,7 +15,7 @@ import com.domain.driver.designer.domain.video.*;
 
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
@@ -136,7 +136,7 @@ public non-sealed class DefaultCreateVideoUseCase extends CreateVideoUseCase {
     private <T extends Identifier> ValidationHandler validateAggregate(
             final String aggregate,
             final Set<T> ids,
-            final Function<Iterable<T>, List<T>> existsByIds
+            final Function<Collection<T>, Collection<T>> existsByIds
     ) {
         final var notification = Notification.create();
         if (ids == null || ids.isEmpty()) {
