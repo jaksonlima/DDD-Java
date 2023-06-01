@@ -1,9 +1,12 @@
 package com.domain.driver.designer.domain.category;
 
 import com.domain.driver.designer.domain.Identifier;
+import com.domain.driver.designer.domain.utils.IdUtils;
 
 import java.util.Objects;
 import java.util.UUID;
+
+import static com.domain.driver.designer.domain.utils.IdUtils.uuid;
 
 public class CategoryID extends Identifier {
 
@@ -16,7 +19,7 @@ public class CategoryID extends Identifier {
     }
 
     public static CategoryID unique() {
-        return from(UUID.randomUUID());
+        return from(uuid());
     }
 
     public static CategoryID from(final String anId) {

@@ -1,9 +1,9 @@
 package com.domain.driver.designer.domain.genre;
 
 import com.domain.driver.designer.domain.Identifier;
+import com.domain.driver.designer.domain.utils.IdUtils;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class GenreID extends Identifier {
 
@@ -16,15 +16,11 @@ public class GenreID extends Identifier {
     }
 
     public static GenreID unique() {
-        return from(UUID.randomUUID());
+        return from(IdUtils.uuid());
     }
 
     public static GenreID from(final String anId) {
         return new GenreID(anId);
-    }
-
-    public static GenreID from(final UUID andId) {
-        return new GenreID(andId.toString().toLowerCase());
     }
 
     @Override

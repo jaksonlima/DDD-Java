@@ -1,6 +1,7 @@
 package com.domain.driver.designer.domain.castmember;
 
 import com.domain.driver.designer.domain.Identifier;
+import com.domain.driver.designer.domain.utils.IdUtils;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -14,7 +15,7 @@ public class CastMemberID extends Identifier {
     }
 
     public static CastMemberID unique() {
-        return CastMemberID.from(UUID.randomUUID().toString());
+        return CastMemberID.from(IdUtils.uuid());
     }
 
     public static CastMemberID from(final String anId) {
