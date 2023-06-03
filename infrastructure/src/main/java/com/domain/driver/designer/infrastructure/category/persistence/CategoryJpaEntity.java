@@ -1,5 +1,6 @@
 package com.domain.driver.designer.infrastructure.category.persistence;
 
+
 import com.domain.driver.designer.domain.category.Category;
 import com.domain.driver.designer.domain.category.CategoryID;
 import jakarta.persistence.Column;
