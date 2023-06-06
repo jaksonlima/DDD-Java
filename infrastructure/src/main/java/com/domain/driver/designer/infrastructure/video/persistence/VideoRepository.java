@@ -1,11 +1,8 @@
 package com.domain.driver.designer.infrastructure.video.persistence;
 
-import com.domain.driver.designer.domain.castmember.CastMemberID;
-import com.domain.driver.designer.domain.category.CategoryID;
-import com.domain.driver.designer.domain.genre.GenreID;
 import com.domain.driver.designer.domain.video.VideoPreview;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,17 +12,17 @@ import java.util.Set;
 public interface VideoRepository extends JpaRepository<VideoJpaEntity, String> {
 
     @Query("""
-            select com.domain.driver.designer.domain.video.VideoPreview(
+            select distinct new com.domain.driver.designer.domain.video.VideoPreview(
                 v.id as id,
                 v.title as title,
                 v.description as description,
-                v.createAt as createAt,
+                v.createdAt as createdAt,
                 v.updatedAt as updatedAt
             )
             from Video v
-                join v.castMember members
-                join v.categories categories
-                join v.genres genres
+                left join v.castMembers members
+                left join v.categories categories
+                left join v.genres genres
             where
                 ( :terms is null or UPPER(v.title) like :terms )
             and
@@ -40,7 +37,6 @@ public interface VideoRepository extends JpaRepository<VideoJpaEntity, String> {
             @Param("castMembers") Set<String> castMembers,
             @Param("categories") Set<String> categories,
             @Param("genres") Set<String> genres,
-            PageRequest page
+            Pageable page
     );
-
 }

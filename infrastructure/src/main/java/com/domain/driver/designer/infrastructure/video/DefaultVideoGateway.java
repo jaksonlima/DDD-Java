@@ -8,18 +8,26 @@ import com.domain.driver.designer.infrastructure.video.persistence.VideoJpaEntit
 import com.domain.driver.designer.infrastructure.video.persistence.VideoRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
+import static com.domain.driver.designer.domain.utils.CollectionUtils.mapTo;
+import static com.domain.driver.designer.domain.utils.CollectionUtils.nullIfEmpty;
+
+@Component
 public class DefaultVideoGateway implements VideoGateway {
 
+    //    private final EventService eventService;
     private final VideoRepository videoRepository;
 
-    public DefaultVideoGateway(final VideoRepository videoRepository) {
+    public DefaultVideoGateway(
+//            @VideoCreatedQueue final EventService eventService,
+            final VideoRepository videoRepository
+    ) {
+//        this.eventService = Objects.requireNonNull(eventService);
         this.videoRepository = Objects.requireNonNull(videoRepository);
     }
 
@@ -31,9 +39,9 @@ public class DefaultVideoGateway implements VideoGateway {
 
     @Override
     public void deleteById(final VideoID anId) {
-        final var anVideoID = anId.getValue();
-        if (this.videoRepository.existsById(anVideoID)) {
-            this.videoRepository.deleteById(anVideoID);
+        final var aVideoId = anId.getValue();
+        if (this.videoRepository.existsById(aVideoId)) {
+            this.videoRepository.deleteById(aVideoId);
         }
     }
 
@@ -59,10 +67,10 @@ public class DefaultVideoGateway implements VideoGateway {
         );
 
         final var actualPage = this.videoRepository.findAll(
-                SqlUtils.like(aQuery.terms()),
-                toString(aQuery.castMembers()),
-                toString(aQuery.categories()),
-                toString(aQuery.genres()),
+                SqlUtils.like(SqlUtils.upper(aQuery.terms())),
+                nullIfEmpty(mapTo(aQuery.castMembers(), Identifier::getValue)),
+                nullIfEmpty(mapTo(aQuery.categories(), Identifier::getValue)),
+                nullIfEmpty(mapTo(aQuery.genres(), Identifier::getValue)),
                 page
         );
 
@@ -75,18 +83,11 @@ public class DefaultVideoGateway implements VideoGateway {
     }
 
     private Video save(final Video aVideo) {
-        return this.videoRepository.save(VideoJpaEntity.from(aVideo))
+        final var result = this.videoRepository.save(VideoJpaEntity.from(aVideo))
                 .toAggregate();
+
+//        aVideo.publishDomainEvents(this.eventService::send);
+
+        return result;
     }
-
-    private Set<String> toString(final Set<? extends Identifier> ids) {
-        if (ids == null || ids.isEmpty()) {
-            return null;
-        }
-
-        return ids.stream()
-                .map(Identifier::getValue)
-                .collect(Collectors.toSet());
-    }
-
 }
