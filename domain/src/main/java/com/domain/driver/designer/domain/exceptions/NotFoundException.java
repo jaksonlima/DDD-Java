@@ -13,14 +13,18 @@ public class NotFoundException extends DomainException {
         super(aMessage, anErrors);
     }
 
-    public static NotFoundException with(final Class<? extends AggregateRoot<?>> anAggregateRoot,
-                                  final Identifier aId) {
+    public static NotFoundException with(
+            final Class<? extends AggregateRoot<?>> anAggregate,
+            final Identifier id
+    ) {
         final var anError = "%s with ID %s was not found".formatted(
-                anAggregateRoot.getSimpleName(),
-                aId.getValue()
+                anAggregate.getSimpleName(),
+                id.getValue()
         );
-
         return new NotFoundException(anError, Collections.emptyList());
     }
 
+    public static NotFoundException with(final Errors error) {
+        return new NotFoundException(error.message(), List.of(error));
+    }
 }

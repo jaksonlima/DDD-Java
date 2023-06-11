@@ -1,4 +1,4 @@
-package com.domain.driver.designer.infrastructure.configuration.properties;
+package com.domain.driver.designer.infrastructure.configuration.properties.google;
 
 public class GoogleCloudProperties {
 

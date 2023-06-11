@@ -1,7 +1,7 @@
 package com.domain.driver.designer.infrastructure.configuration;
 
-import com.domain.driver.designer.infrastructure.configuration.properties.GoogleCloudProperties;
-import com.domain.driver.designer.infrastructure.configuration.properties.GoogleStorageProperties;
+import com.domain.driver.designer.infrastructure.configuration.properties.google.GoogleCloudProperties;
+import com.domain.driver.designer.infrastructure.configuration.properties.google.GoogleStorageProperties;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
