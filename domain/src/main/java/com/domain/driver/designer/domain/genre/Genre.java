@@ -78,7 +78,7 @@ public class Genre extends AggregateRoot<GenreID> {
     }
 
     @Override
-    protected void validate(final ValidationHandler handler) {
+    public void validate(final ValidationHandler handler) {
         new GenreValidator(this, handler).validate();
     }
 
