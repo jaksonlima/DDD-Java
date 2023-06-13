@@ -143,7 +143,7 @@ public class DefaultUpdateVideoUseCase extends UpdateVideoUseCase {
     private <T extends Identifier> ValidationHandler validateAggregate(
             final String aggregate,
             final Set<T> ids,
-            final Function<Collection<T>, Collection<T>> existsByIds
+            final Function<Collection<T>, List<T>> existsByIds
     ) {
         final var notification = Notification.create();
         if (ids == null || ids.isEmpty()) {

@@ -14,16 +14,13 @@ import com.domain.driver.designer.domain.validation.handler.Notification;
 import com.domain.driver.designer.domain.video.*;
 
 import java.time.Year;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.domain.driver.designer.domain.video.VideoMediaType.*;
 
-public non-sealed class DefaultCreateVideoUseCase extends CreateVideoUseCase {
+public final class DefaultCreateVideoUseCase extends CreateVideoUseCase {
 
     private final CategoryGateway categoryGateway;
     private final CastMemberGateway castMemberGateway;
@@ -136,7 +133,7 @@ public non-sealed class DefaultCreateVideoUseCase extends CreateVideoUseCase {
     private <T extends Identifier> ValidationHandler validateAggregate(
             final String aggregate,
             final Set<T> ids,
-            final Function<Collection<T>, Collection<T>> existsByIds
+            final Function<Collection<T>, List<T>> existsByIds
     ) {
         final var notification = Notification.create();
         if (ids == null || ids.isEmpty()) {
@@ -164,5 +161,4 @@ public non-sealed class DefaultCreateVideoUseCase extends CreateVideoUseCase {
                 .map(mapper)
                 .collect(Collectors.toSet());
     }
-
 }

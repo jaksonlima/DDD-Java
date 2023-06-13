@@ -351,7 +351,7 @@ public class Video extends AggregateRoot<VideoID> {
 
     private void onAudioVideoMediaUpdated(final AudioVideoMedia media) {
         if (media != null && media.isPendingEncode()) {
-//            this.registerEvent(new VideoMediaCreated(getId().getValue(), media.rawLocation()));
+            this.registerEvent(new VideoMediaCreated(getId().getValue(), media.rawLocation()));
         }
     }
 }
